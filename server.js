@@ -136,7 +136,6 @@ function fireSearchEvent (i, visitedLocation) {
 }
 
 io.on('connection', function (socket) {
-  var arr = []
   var id = shortid.generate()
   let insertObj = new insertInDB()
   var trackObjectId
@@ -241,8 +240,8 @@ io.on('connection', function (socket) {
     })
   })
 
-  socket.on('search', function (lat, long, info) {
-    socket.broadcast.emit('search', lat, long, info)
+  socket.on('search', function (id, lat, long, status, info) {
+    socket.broadcast.emit('search', id, lat, long, status, info)
   })
 })
 
