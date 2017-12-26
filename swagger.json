@@ -1,0 +1,314 @@
+{
+    "swagger": "2.0",
+    "info": {
+      "version": "1.0.0",
+      "title": "GPS Tracking History",
+      "description": "GPS Tracking History"
+     
+    },
+    "host": "localhost:3000",
+    "basePath": "",
+    "tags": [
+      {
+        "name": "Tracks",
+        "description": "API for Tracks in the system"
+      },
+      {
+        "name": "Users",
+        "description": "API for Users in the system"
+      },
+      {
+        "name": "Places",
+        "description": "API for saved places in the database"
+      }
+    ],
+    "schemes": [
+      "http"
+    ],
+    "consumes": [
+      "application/json"
+    ],
+    "produces": [
+      "application/json"
+    ],
+    "paths": {
+      "/getTracks": {
+       
+        "get": {
+          "tags": [
+            "Tracks"
+          ],
+          "summary": "Get all Tracks in system",
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/definitions/Tracks"
+              }
+            }
+          }
+        }
+      },
+      "/getTrackData/{TrackId}": {
+        "parameters": [
+          {
+            "name": "TrackId",
+            "in": "path",
+            "required": true,
+            "description": "ID of Track that we want to find",
+            "type": "string"
+          }
+        ],
+        "get": {
+          "tags": [
+            "Tracks"
+          ],
+          "summary": "Get Track with given ID",
+          "responses": {
+            "200": {
+              "description": "Track is found",
+              "schema": {
+                "$ref": "#/definitions/Track"
+              }
+            }
+          }
+        }
+      },
+      "/getTrackPoints/{TrackId}": {
+        "parameters": [
+          {
+            "name": "TrackId",
+            "in": "path",
+            "required": true,
+            "description": "ID of Track to find the points ",
+            "type": "string"
+          }
+        ],
+        "get": {
+          "tags": [
+            "Tracks"
+          ],
+          "summary": "Get points of track",
+          "responses": {
+            "200": {
+              "description": "Ok",
+              "schema": {
+                "$ref": "#/definitions/TrackPoints"
+              }
+            }
+          }
+        }
+      },
+      "/getUsers": {
+        
+         "get": {
+           "tags": [
+             "Users"
+           ],
+           "summary": "Get all Users in system",
+           "responses": {
+             "200": {
+               "description": "OK",
+               "schema": {
+                 "$ref": "#/definitions/Users"
+               }
+             }
+           }
+         }
+       },
+      "/getUserData/{userId}": {
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "description": "ID of User that we want to find",
+            "type": "string"
+          }
+        ],
+        "get": {
+          "tags": [
+            "Users"
+          ],
+          "summary": "Get User with given ID",
+          "responses": {
+            "200": {
+              "description": "User is found",
+              "schema": {
+                "$ref": "#/definitions/User"
+              }
+            }
+          }
+        }
+      },
+      "/getUserTracks/{userId}": {
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "description": "ID of User to find his tracks",
+            "type": "string"
+          }
+        ],
+        "get": {
+          "tags": [
+            "Users"
+          ],
+          "summary": "Get Tracks with given user ID",
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/definitions/Tracks"
+              }
+            }
+          }
+        }
+      },
+      "/savedPlaces": {
+        
+         "get": {
+           "tags": [
+             "Places"
+           ],
+           "summary": "Get all Places in the  system",
+           "responses": {
+             "200": {
+               "description": "OK",
+               "schema": {
+                 "$ref": "#/definitions/Places"
+               }
+             }
+           }
+         }
+        
+       
+    }
+  },
+    "definitions": {
+      "Track": {
+        "required": [
+        
+          "_id"
+        ],
+        "properties": {
+          "_id": {
+            "type": "string",
+            "format":"ObjectId",
+            "uniqueItems": true
+          },
+          "trackId": {
+            "type": "string",
+            "uniqueItems": true
+          },
+          "startTime": {
+            "type": "string",
+            "format":"date-time"
+          },
+          "endTime": {
+            "type": "string",
+            "format":"date-time"
+          },
+          "userID":{
+            "type": "string",
+            "format":"ObjectId"
+          }
+        }
+      },
+      "TrackPoints": {
+        "required": [
+        
+          "_id"
+        ],
+        "properties": {
+          "_id": {
+            "type": "string",
+            "format":"ObjectId",
+            "uniqueItems": true
+          },
+          "track": {
+            "type": "string",
+            "format":"ObjectId",
+            "uniqueItems": true
+          },
+          "bucket": {
+            "type": "integer"
+            
+          },
+          "location": {
+            "type": "array",
+            "$ref": "#/definitions/location"
+           
+          }
+        }
+      },
+      "Tracks": {
+        "type": "array",
+        "$ref": "#/definitions/Track"
+      },
+      "User": {
+        "required": [
+        
+          "_id"
+        ],
+        "properties": {
+          "_id": {
+            "type": "string",
+            "format":"ObjectId",
+            "uniqueItems": true
+          },
+          "userName": {
+            "type": "string"
+          }
+        }
+      },
+      "location": {
+        
+        "properties": {
+          "timeSent": {
+            "type": "string",
+            "format":"date-time"
+            
+          },
+          "latitude": {
+            "type": "string"
+          },
+          "longitude": {
+            "type": "string"
+          }
+
+        }
+      },
+      "Place": {
+        
+        "properties": {
+          "timeSent": {
+            "type": "string",
+            "format":"date-time"
+            
+          },
+          "latitude": {
+            "type": "string"
+          },
+          "longitude": {
+            "type": "string"
+          },
+          "placeID":
+          {
+            "type": "string"
+          }
+
+        }
+      },
+      "Users": {
+        "type": "array",
+        "$ref": "#/definitions/User"
+      },
+      "Places":{
+        "type": "array",
+        "$ref": "#/definitions/Place"
+      }
+
+    }
+  }

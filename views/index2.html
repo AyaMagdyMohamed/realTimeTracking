@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>index2</title>
+    <style media="screen">
+      #chat{
+               height: 500px
+
+      }
+
+
+      #chat-wrap{
+                    float:left;
+                    border: 1px rgb(201, 26, 26) solid;
+                    
+      }
+
+    </style>
+  </head>
+
+
+  
+  <body>
+    
+    <div id="content-wrap">
+      <div id="chat-wrap">
+        <div id="chat"></div>
+        <form id="send-messages">
+          <input size=35 type="text" name="" value="" id="trackID">
+          <input size=35 type="text" name="" value="" id="lat">
+          <input size=35 type="text" name="" value="" id="long">
+          <input size=35 type="text" name="" value="" id="info">
+          <input type="submit" name="" value="start">
+        </form>
+        <form id="send"> <input type="submit" name="" value="location"></form>
+        <form id="search"> <input type="submit" name="" value="search"></form>
+        
+        
+      </div>
+      <div id="users">
+      </div>
+    </div>
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+
+      <script src="/socket.io/socket.io.js"></script>
+      <script>
+            $(function(){
+
+
+                     var iosocket = io.connect();
+                     var trackID;
+                     var $id=$('#trackID');
+                     var $lat=$('#lat');
+                     var $long=$('#long');
+                     var $sendMessages=$('#send-messages');
+                     var $send=$('#send');
+                     var $search=$('#search');
+                     var $info=$('#info');
+                     var cnt=0;
+
+
+                      // -----------------------------------------------
+                 
+                    
+
+                
+                     $sendMessages.submit(function(e){
+                           e.preventDefault();
+
+                               console.log("clicked")
+                               console.log("hi") 
+                               iosocket.emit('startTrack',$id.val());                                            
+                          });
+
+                          $send.submit(function(e){
+                           e.preventDefault();
+                           console.log("send clicked")
+
+                           iosocket.emit('location',trackID,$lat.val(),$long.val());
+
+                          })
+                          $search.submit(function(e){
+                           e.preventDefault();
+                           console.log("search clicked")
+
+                           iosocket.emit('search',$lat.val(),$long.val(),$info.val());
+
+                          })
+                     
+
+                            iosocket.on("startTrack",function(id)
+                          {
+                                trackID=id;
+                                console.log("inside on socket")
+
+                         })
+
+
+                        //  iosocket.on("data2",function(data)
+                        //  {
+                        //    console.log("locaaaaaation");
+                        //   var url = 'http://localhost:3000/test.html?trackId='+data.id+"&lat="+data.lat+"&long="+data.long;
+   
+                        //    //document.location.href = url;
+                        //     window.open(url, '_blank');
+                        //  })
+
+
+                   
+
+
+
+            })
+      </script>
+
+
+
+    </script>
+  </body>
+</html>
