@@ -146,17 +146,17 @@ io.on('connection', function (socket) {
   socket.on('startTrack', function (ID) {
     console.log('hello user')
     // console.log("trackID",id);
-    // socket.emit('startTrack',id);//uncommet this line after remove simulation part
+    socket.emit('startTrack', id) // uncommet this line after remove simulation part
     // for simulation
-    if (ID == 1) {
-      arr = arrOFPositins
-    } else if (ID == 2) {
-      arr = arrOFPositins2
-    }
-    for (var i = 0; i < arr.length; i++) {
-      doSetTimeout((i + 1), arr[i], id)
-      fireSearchEvent((i + 1), arr[i])
-    }
+    // if (ID == 1) {
+    //   arr = arrOFPositins
+    // } else if (ID == 2) {
+    //   arr = arrOFPositins2
+    // }
+    // for (var i = 0; i < arr.length; i++) {
+    //   doSetTimeout((i + 1), arr[i], id)
+    //   fireSearchEvent((i + 1), arr[i])
+    // }
 
     var TrackModel = db.model('tracks')
     var new_track = new TrackModel()
