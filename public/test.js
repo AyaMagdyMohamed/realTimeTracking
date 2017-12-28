@@ -52,17 +52,11 @@ $(document).ready(function () {
   flightPlanCoordinates.push({lat: Number(data.lat), lng: Number(data.long)})
 
   function moveCursor (socketData) {
-    console.log('--------------data-------------')
-    console.log(socketData.id)
-    console.log(socketData.lat)
-    console.log(socketData.long)
-
-    console.log('just funna move it...')
+    
     marker.setPosition(new google.maps.LatLng(socketData.lat, socketData.long))
 
     flightPlanCoordinates.push({lat: Number(socketData.lat), lng: Number(socketData.long)}
                     )
-    console.log('size issssssssss', flightPlanCoordinates.length)
     if (flightPlanCoordinates.length == 2) {
       var flightPath = new google.maps.Polyline({
         path: flightPlanCoordinates,
@@ -73,14 +67,12 @@ $(document).ready(function () {
 
       })
       flightPath.setMap(map)
-                          // map.fitBounds(latLngBounds);
       var temp = flightPlanCoordinates[1]
       flightPlanCoordinates = [temp]
     }
   }
 
   socket.on('data', function (socketData) {
-            // setInterval(moveCursor(data),10000);
 
     if ((socketData.id == data.trackId) == true) { moveCursor(socketData) }
     console.log('dataaa', socketData.id)
@@ -89,13 +81,8 @@ $(document).ready(function () {
 
   socket.on('search', function (id, lat, long, info, status) {
     console.log('inside search')
-    console.log('info', info)
-    console.log('status', status)
-
     var infowindow = new google.maps.InfoWindow()
     var item = {}
-
-    
     item = savedPlaces.find(item => item.placeID == id)
 
     console.log('item', typeof (item))
@@ -113,9 +100,6 @@ $(document).ready(function () {
     }
 
     for (var i = 0; i < savedPlaces.length; i++) {
-      console.log('markersLength', savedPlaces.length)
-
-      console.log(savedPlaces[i].placeID, '    ', id)
       if (savedPlaces[i].placeID == id && status == 'success') {
         savedPlaces[i].setIcon('static/GoogleMapsMarkers/darkgreen_MarkerS.png')
         google.maps.event.addListener(savedPlaces[i], 'click', (function (marker, i) {

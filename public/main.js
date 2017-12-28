@@ -63,10 +63,8 @@ $(document).ready(function () {
     document.getElementById('list').appendChild(document.createElement('br'))
   }
   socket.on('data', function (data) {
-    // setInterval(moveCursor(data),10000);
-
     moveCursor(data)
-    console.log('dataaa', data.id)
+   
   })
 
   function hide () {
