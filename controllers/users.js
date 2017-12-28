@@ -3,7 +3,6 @@ var db = require('../dbConnection.js')
 var router = express.Router()
 
 router.get('/getUserTracks/:userId', function (req, resp) {
-  // resp.send(req.params.userId);
   var userId = JSON.parse(req.params.userId)
   console.log(userId)
   db.model('users').findOne({'userID': userId}, {'_id': true}, function (err, data) {

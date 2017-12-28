@@ -87,9 +87,6 @@ $(document).ready(function () {
     console.log('comparing', (socketData.id == data.trackId))
   })
 
-// TODO
-// based on status come with socket change marker color
-// change popup content to info come from socket
   socket.on('search', function (id, lat, long, info, status) {
     console.log('inside search')
     console.log('info', info)
@@ -98,7 +95,7 @@ $(document).ready(function () {
     var infowindow = new google.maps.InfoWindow()
     var item = {}
 
-    // item = savedMarkers.find(item => item.getPosition().lat() == lat&&((item.getPosition().lng()).toFixed(6))==long);
+    
     item = savedPlaces.find(item => item.placeID == id)
 
     console.log('item', typeof (item))

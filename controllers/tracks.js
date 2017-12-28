@@ -15,11 +15,6 @@ router.get('/getTracks', function (req, resp) {
 router.get('/getTrackData/:trackId', function (req, resp) {
   var trackId = JSON.parse(req.params.trackId)
   db.model('tracks').find({'trackID': trackId}, function (err, data) {
-  //   db.model("tracks").populate(data,{path:"userID"},function (err,data) {
-  //   console.log(data);
-  //   resp.send(data);
-  //  });
-
     resp.send(data)
   })
 })

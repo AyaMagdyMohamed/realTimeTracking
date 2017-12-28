@@ -118,8 +118,7 @@ app.get('/test.html', function (req, resp) {
 })
 
 app.get('/', function (req, res) {
-    // res.sendfile(__dirname+"/views/index.html");
-  res.sendfile(path.join(__dirname, '/views/index.html'))
+  res.sendfile(path.join(__dirname, '/views/index.html')) 
 })
 
 app.get('/index2', function (req, res) {
@@ -143,7 +142,6 @@ io.on('connection', function (socket) {
   console.log('a user connected')
 
   socket.on('startTrack', function (ID) {
-    console.log('hello user')
     // console.log("trackID",id);
     socket.emit('startTrack', id) // uncommet this line after remove simulation part
     // for simulation
@@ -188,11 +186,8 @@ io.on('connection', function (socket) {
       tracksSocketIDs[socket.id] = trackId
     }
 
-   // var location={"lat":String(latitude),"long":longitude,"timeSent":(new Date).toISOString()}
     if (trackId != null) {
       locationsList.push({'lat': String(latitude), 'long': longitude, 'timeSent': new Date()})
-   // console.log("INSERT_BUFFER_SIZE",insertInDB.INSERT_BUFFER_SIZE);
-  // if(locationsList.length == insertInDB.INSERT_BUFFER_SIZE) {
       if ((trackId in tracksIDs) == false) {
         tracksIDs[trackId] = trackObjectId
       }
@@ -200,15 +195,11 @@ io.on('connection', function (socket) {
       console.log('tracksIDs[trackId]', tracksIDs[trackId])
       insertObj.dataInsertion(tracksIDs[trackId], locationsList)
     }
-   //   locationsList.splice(0,locationsList.length) ;
-
-  // }
     tracks[socket.id] = locationsList
   })
 
   socket.on('disconnect', async function () {
     console.log('disconnected', socket.id)
-   // insertInDB.isTrackedInCurrentSocket = false;
     console.log('track id socketIDS', tracksSocketIDs[socket.id])
     console.log(tracks[socket.id])
     if (socket.id in tracks) {
@@ -235,8 +226,7 @@ io.on('connection', function (socket) {
     console.log(trackID)
     db.model('tracks').update({'trackID': String(trackID)}, {$set: {'endTime': new Date()}}, function (err, data) {
       if (err) { console.log(err) }
-      // else
-      // console.log(data);
+
     })
   })
 
